@@ -42,8 +42,8 @@ d = variable.*/
 	float x1 = 0;
 	float y1 = 0;
 
-	float x2 = 0;
-	float y2 = 0;
+	float x2 = 100;
+	float y2 = 100;
 
 	float t = 0.0f;
 	float dt = PHYICS_TIMESTEP;

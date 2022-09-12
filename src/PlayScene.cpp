@@ -31,6 +31,11 @@ void PlayScene::Update()
 
 	(*m_pPlaneSprite).GetTransform()->position = glm::vec2(x1, y1);
 
+	y2 = y2 + (cos(t * frequency)) * frequency * amplitude * dt;
+	x2 = x2 + (-sin(t * frequency)) * frequency * amplitude * dt;
+
+	(*m_pPlayer).GetTransform()->position = glm::vec2(x2, y2);
+
 	UpdateDisplayList();
 }
 
@@ -198,10 +203,12 @@ void PlayScene::Start()
 	
 	// Plane Sprite
 	m_pPlaneSprite = new Plane();
+	m_pPlaneSprite->GetTransform()->position = glm::vec2(offsetX, offsetY);
 	AddChild(m_pPlaneSprite);
 
 	// Player Sprite
 	m_pPlayer = new Player();
+	m_pPlaneSprite->GetTransform()->position = glm::vec2(offsetX + 100, offsetY + 100);
 	AddChild(m_pPlayer);
 	//m_playerFacingRight = true;
 
@@ -278,16 +285,31 @@ void PlayScene::GUI_Function()
 		std::cout << "My Button Pressed" << std::endl;
 	}
 
+	//ImGui::Separator();
+
+	//static float float3[3] = { 0.0f, 1.0f, 1.5f };
+	//if(ImGui::SliderFloat3("My Slider", float3, 0.0f, 2.0f))
+	//{
+	//	std::cout << float3[0] << std::endl;
+	//	std::cout << float3[1] << std::endl;
+	//	std::cout << float3[2] << std::endl;
+	//	std::cout << "---------------------------\n";
+	//}
+
 	ImGui::Separator();
 
-	static float float3[3] = { 0.0f, 1.0f, 1.5f };
-	if(ImGui::SliderFloat3("My Slider", float3, 0.0f, 2.0f))
-	{
-		std::cout << float3[0] << std::endl;
-		std::cout << float3[1] << std::endl;
-		std::cout << float3[2] << std::endl;
-		std::cout << "---------------------------\n";
-	}
+	ImGui::SliderFloat("frequency", &frequency, 0.0f, 5.0f, "%.3f");
+	ImGui::SliderFloat("amplitude", &amplitude, 0.0f, 800.0f, "%.3f");
+	ImGui::SliderFloat("OffsetX", &offsetX, 0.0f, 800.0f, "%.3f");
+	ImGui::SliderFloat("OffsetY", &offsetY, 0.0f, 800.0f, "%.3f");
+
+	ImGui::Separator();
+
+	ImGui::SliderFloat("PositionX_Megaman", &x2, 0.0f, 800.0f, "%.3f");
+	ImGui::SliderFloat("PositionY_Megaman", &y2, 0.0f, 800.0f, "%.3f");
+
+	ImGui::Separator();
+	ImGui::SliderFloat("Time", &t, 0.0f, 100.0f, "%.3f");
 	
 	ImGui::End();
 }
